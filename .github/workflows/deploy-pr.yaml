@@ -58,4 +58,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr comment ${{ env.PR_NUMBER }} --body "🚀 **Preview Deployment Success!** View your live changes here: ${{ steps.cf_deploy.outputs.deployment-url }}"
+          gh pr comment ${{ env.PR_NUMBER }} \
+            --repo ${{ github.repository }} \
+            --body "🚀 **Preview Deployment Success!** View your live changes here: ${{ steps.cf_deploy.outputs.deployment-url }}"
