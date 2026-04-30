@@ -53,3 +53,9 @@ jobs:
             pages deploy site/ --project-name=openshift-examples --branch pr-${{ env.PR_NUMBER }}
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr comment ${{ env.PR_NUMBER }} --body "🚀 **Preview Deployment Success!** View your live changes here: ${{ steps.cf_deploy.outputs.deployment-url }}"
