@@ -43,8 +43,8 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }} 
+          preCommands: PR_NUMBER=$(cat pr-number.txt)
           command: |
-            PR_NUMBER=$(cat pr-number.txt)
             pages deploy site/ --project-name=openshift-examples --branch=pr-${PR_NUMBER}
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
