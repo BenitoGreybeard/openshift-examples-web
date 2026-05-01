@@ -45,6 +45,7 @@ jobs:
           echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
 
       - name: Deploy
+        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -57,7 +58,9 @@ jobs:
       - name: Comment on PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CMD_OUTPUT: ${{ steps.deploy.outputs.command-output }}
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
         run: |
           gh pr comment ${{ env.PR_NUMBER }} \
             --repo ${{ github.repository }} \
-            --body "🚀 **Preview Deployment Success!** View your live changes here: ${{ steps.cf_deploy.outputs.deployment-url }}"
+            --body "🚀 **Preview Deployment Success!** View your live changes here: $DEPLOYMENT_URL\n\n$CMD_OUTPUT"
