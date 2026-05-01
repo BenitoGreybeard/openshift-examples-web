@@ -54,7 +54,7 @@ jobs:
           
           # 3. Use 'jq' to filter the JSON for deployments matching this PR's branch
           # (In our previous step, we named the branch 'pr-123')
-          TARGET_IDS=$(jq -r ".[] | select(.branch == \"pr-$PR_NUMBER\") | .id" deployments.json)
+          TARGET_IDS=$(jq -r ".[] | select(.branch == \"pr-$PR_NUMBER\") | .Id" deployments.json)
           
           # Check if any deployments were actually found
           if [ -z "$TARGET_IDS" ]; then
